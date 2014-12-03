@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE web-app PUBLIC
+    "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+    "http://java.sun.com/dtd/web-app_2_3.dtd">
+
+<web-app id="WebApp_ID">
+	<display-name>CajerosSinDinero</display-name>
+  	<description>CajerosSinDinero</description>
+
+<!--  ************************** spring NO MVC ************************** -->
+
+<!--   <listener> -->
+<!--     <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class> -->
+<!--   </listener> -->
+<!--   <context-param> -->
+<!--     <param-name>contextConfigLocation</param-name> -->
+<!--     <param-value>/WEB-INF/applicationContext*.xml</param-value> -->
+<!--   </context-param> -->
+
+  <listener>
+    <listener-class>com.elkardumen.servlet.ConexionServletContextListener</listener-class>
+  </listener>
+
+<!-- ************************** spring MVC **************************  -->
+    <servlet>
+        <servlet-name>spring</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    
+    
+    
+    
+   
+    
+    <servlet-mapping>
+        <servlet-name>spring</servlet-name>
+        <url-pattern>*.html</url-pattern>
+    </servlet-mapping>
+	<servlet-mapping>
+	  <servlet-name>spring</servlet-name>
+	  <url-pattern>/dwr/*</url-pattern>
+	</servlet-mapping>
+
+ 	<servlet-mapping>
+	  <servlet-name>spring</servlet-name>
+	  <url-pattern>/getData</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+	  <servlet-name>spring</servlet-name>
+	  <url-pattern>/getDataUsuarios</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+	  <servlet-name>spring</servlet-name>
+	  <url-pattern>/saveDataUsuarios</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+	  <servlet-name>spring</servlet-name>
+	  <url-pattern>/getDataConteosHistorico</url-pattern>
+	</servlet-mapping>
+		<servlet-mapping>
+	  <servlet-name>spring</servlet-name>
+	  <url-pattern>/getComando</url-pattern>
+	</servlet-mapping>
+		
+	
+    <welcome-file-list>
+        <welcome-file>/pages/index.jsp</welcome-file>
+    </welcome-file-list>
+
+</web-app>
