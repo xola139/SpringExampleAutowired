@@ -1,42 +1,53 @@
-
-var myControls;
-var colNameParams;
-var colModelParam;
-var myControls3Caseteras;
-var colNameParams3Caseteras;
-var colModelParam3Caseteras;
-var myControls2Caseteras;
-var colNameParams2Caseteras;
-var colModelParam2Caseteras;
-
-var myControlsHis;
-var colNameParamsHis; 
-var colModelParamHis;
-var myControlsHis3;
-var colNameParamsHis3;
-var colModelParamHis3;
-
-var myControlsHis2;
-var colNameParamsHis2;
-var colModelParamHis2;
-
 jQuery(document).ready(function(){
 
-	myControls = new Array('id','firstname','lastname','email','password','act');
-	colNameParams = ['ID','First Name','Last Name','E-mail','Pasword','Actions'];
-	colModelParam = [
-	         	   	   	{name:myControls[0],index:myControls[0],width: 50,sortable:true,align:'center',editable:false},
-	         	   	   	{name:myControls[1],index:myControls[1],width: 85,sortable:true,align:'center',editable:true},
-	        			{name:myControls[2],index:myControls[2],width: 60,sortable:true,align:'center',editable:true},
-	        			{name:myControls[3],index:myControls[3],width: 20,sortable:true,align:'center',editable:true},
-	        			{name:myControls[4],index:myControls[4],width: 25,sortable:true,align:'center',editable:true},
-	        			{name:myControls[5],index:myControls[5],width: 75,sortable:true,align:'center',editable:false}
+	var myControls = new Array('cajero','hora','contador');
+	var colNameParams = ['Cajero','Hora','Contador'];
+	var colModelParam = [
+	         	   	   	{name:myControls[0],width: 85,sortable:false},
+	        			{name:myControls[1],width: 80,sortable:false},
+	        			{name:myControls[2],width: 45,sortable:false},
 	        			
 	        			];
 	
-	dibujaGrid("gridUsuarios", myControls, colNameParams, colModelParam, "Usuarios",600,155,new Array());
+	
+	var myControlsAlerta = new Array('cajero','hora','estatus');
+	var colNameParamsAlerta = ['Cajero','Hora','Estatus'];
+	var colModelParamAlerta = [
+	         	   	   	{name:myControlsAlerta[0],width: 85,sortable:false},
+	        			{name:myControlsAlerta[1],width: 80,sortable:false},
+	        			{name:myControlsAlerta[2],width: 100,sortable:false},
+	        			
+	        			
+	        			];
+	
+	var myControlsSalida = new Array('cajero','hora');
+	var colNameParamsAlertaSal = ['Cajero','Hora'];
+	var colModelParamAlertaSal = [
+	         	   	   	{name:myControlsSalida[0],width: 85,sortable:false},
+	        			{name:myControlsSalida[1],width: 80,sortable:false},
+	        			
+	        			
+	        			];
+	
+	var myControlsCount = new Array('total','fecha', 'menor30', 'entre3040', 'entre4050', 'mayor50');
+	var colNameParamsCount = ['Total','Fecha', '< 30', '30 - 40', '40 - 50', '> 50'];
+	var colModelParamCount = [
+	         	   	   	{name:myControlsCount[0],width: 50,sortable:false},
+	        			{name:myControlsCount[1],width: 100,sortable:false},
+	        			{name:myControlsCount[2],width: 45,sortable:false},
+	        			{name:myControlsCount[3],width: 45,sortable:false},
+	        			{name:myControlsCount[4],width: 45,sortable:false},
+	        			{name:myControlsCount[5],width: 45,sortable:false},
+	        			
+	        			];
+	
+	dibujaGrid("tablaEntradaCodigos", myControls, colNameParams, colModelParam, "Entrada de codigo 6481 (60 min)",245,560);
+	dibujaGrid("tablaAlertas", myControlsAlerta, colNameParamsAlerta, colModelParamAlerta, "Alertas",285,560);
+	dibujaGrid("tablaSalidaCodigos", myControlsSalida, colNameParamsAlertaSal, colModelParamAlertaSal, "Llego Trx",200,340);
+	dibujaGrid("tablaCount", myControlsCount, colNameParamsCount, colModelParamCount, "Conteo por Minuto",370,160);
 
-	
-	
+
+
+
 });
   
