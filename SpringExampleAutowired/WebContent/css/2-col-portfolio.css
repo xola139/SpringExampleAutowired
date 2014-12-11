@@ -1,0 +1,16 @@
+
+.portfolio-item {
+	margin-top:40px;
+	text-align: center;
+}
+
+.scrollup{
+    width:40px;
+    height:40px;
+    opacity:0.3;
+    position:fixed;
+    bottom:50px;
+    display:none;
+    text-indent:-9999px;
+    background: url('../images/icon_top.png') no-repeat;
+}
