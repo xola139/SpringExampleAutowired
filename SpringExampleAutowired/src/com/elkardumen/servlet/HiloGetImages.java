@@ -1,5 +1,6 @@
 package com.elkardumen.servlet;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,9 +9,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.springframework.ui.ModelMap;
 
-import com.elkardumen.bean.Customer;
 import com.elkardumen.bean.Imagen;
 import com.elkardumen.dao.ImagenesDAO;
 
@@ -18,6 +17,11 @@ public class HiloGetImages  extends Thread{
 	
 	private int ciclos=0;
 	private static Map<String,Imagen> m = new HashMap<String,Imagen>();
+	private static List<Imagen> lstImagen=new ArrayList<Imagen>();
+
+	private static StringBuffer retorno;
+
+	
 	public static boolean seguirCiclo=true;
 	private ImagenesDAO imagenDAO;
 	
@@ -32,23 +36,17 @@ public class HiloGetImages  extends Thread{
 		Document doc;
 		
 		
-		imagenDAO.findAll();
+		//imagenDAO.findAll();
 		
 		
-		System.getProperties().put( "proxySet", "true" );
-		System.getProperties().put( "socksProxyHost", "127.0.0.1" );
-		System.getProperties().put( "socksProxyPort", "9150" );
-		
-		
-		
-		
+//		System.getProperties().put( "proxySet", "true" );
+//		System.getProperties().put( "socksProxyHost", "127.0.0.1" );
+//		System.getProperties().put( "socksProxyPort", "9150" );
+//		
 		
 		while(seguirCiclo){
 			ciclos++;
 			System.out.println("Ciclos # "+ ciclos);
-			
-
-			
 			Imagen img;
 			Elements ele;
 		try {
@@ -72,6 +70,7 @@ public class HiloGetImages  extends Thread{
 					
 					if(!m.containsKey(img.getImg())){
 						m.put(img.getImg(), img);
+						lstImagen.add(img);
 						
 						//System.out.println("_________<"+imagenDAO.getMax());
 						//imagenDAO.insert(img);
@@ -95,7 +94,7 @@ public class HiloGetImages  extends Thread{
 				//m.put(img.getImg(), img);
 				if(!m.containsKey(img.getImg())){
 					m.put(img.getImg(), img);
-					
+					lstImagen.add(img);
 					//System.out.println("_________<"+imagenDAO.getMax());
 					//imagenDAO.insert(img);
 				}
@@ -116,7 +115,7 @@ public class HiloGetImages  extends Thread{
 					//m.put(img.getImg(), img);
 					if(!m.containsKey(img.getImg())){
 						m.put(img.getImg(), img);
-						
+						lstImagen.add(img);
 						//System.out.println("_________<"+imagenDAO.getMax());
 						//imagenDAO.insert(img);
 					}
@@ -126,24 +125,7 @@ public class HiloGetImages  extends Thread{
 			}
 
 			
-		
-//			
-//			
-//			 
-//			//*****************************************
-//			doc = Jsoup.connect("http://nuevoydivertido.com/").get();
-//			elementos=doc.select("img[class*=wp-image]");
-//			
-//		
-//			List<Imagen> lstND=new ArrayList<Imagen>();
-//		
-//			for (Element table : elementos) {
-//				img=new Imagen();
-//				img.setImg(table.attr("src"));
-//				lstND.add(img);
-//				m.put(img.getImg(), img);
-//			}
-			
+
 			Thread.sleep(60000L);
 		} catch (Exception e) {
 	
@@ -157,6 +139,8 @@ public class HiloGetImages  extends Thread{
 			}
 		}
 	
+		
+		
 		
 	}
 		System.out.println("*****************************************");
@@ -178,8 +162,69 @@ public class HiloGetImages  extends Thread{
 		HiloGetImages.m = m;
 	}
 
+	
+	
+	public static List<Imagen> getLstImagen() {
+		return lstImagen;
+	}
 
+	public static void setLstImagen(List<Imagen> lstImagen) {
+		HiloGetImages.lstImagen = lstImagen;
+	}
+
+	public static  String primerasImagenes(){
+		retorno=new StringBuffer();
+		int count=0;
+		for(int i=lstImagen.size()-1;i>0;i--){
+			retorno.append("<div class=\"row\">");
+			retorno.append("	<div class=\"portfolio-item\">");
+			retorno.append("		<div><h3>"+lstImagen.get(i).getTitle()+"</h3></div>");
+			retorno.append("		<img class=\"img-responsive img-thumbnail\" style=\"width:auto; height:auto;\" src=\""+lstImagen.get(i).getImg()+"\" />");
+			retorno.append("	</div>");
+			retorno.append("	<div style=\"text-align: center;\">");
+			retorno.append("		<div class=\"fb-like\" data-href=\"http://xdiversion.com/laImagen?laURL="+lstImagen.get(i).getImg()+"\" data-layout=\"box_count\" data-action=\"like\" data-show-faces=\"true\" data-share=\"true\"></div>");
+			retorno.append("	</div>");
+			retorno.append("</div>");
+			count++;
+			
+			if(count==6){
+				retorno.append("<input type=\"hidden\" value=\"6\" id=\"nElementosMostrados\">");
+				retorno.append("<input type=\"hidden\" value=\""+lstImagen.size()+"\" id=\"totalElemtos\">");
+				return retorno.toString();
+			}
+			
+		}
+		
+		return "";
+	}
 	
 	
+	public static List<Imagen> getNextImages(int contador){
+		List<Imagen> nextImagen=new ArrayList<Imagen>();
+		int count=0;
+		
+		for(int i=lstImagen.size()-contador;i>0;i--){
+			nextImagen.add(lstImagen.get(i));
+			
+			count++;
+			if(count==6){
+				System.out.println(nextImagen.size()+"<-----------");
+				return nextImagen;
+			}
+		}
+		
+		
+	
+		return null;
+	}
+	
+	public static String getRetorno() {
+		return primerasImagenes();
+	}
+
+	public static void setRetorno(StringBuffer retorno) {
+		HiloGetImages.retorno = retorno;
+	}
+
 	
 }

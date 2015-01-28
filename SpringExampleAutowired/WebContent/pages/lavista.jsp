@@ -173,47 +173,19 @@
     </ul>
     
     <div class="fb-like" data-href="http://www.xdiversion.com" data-layout="box_count" data-action="like" data-show-faces="true" data-share="true"></div>
-    
-    
-    
-    
-    
     <div id="myTabContent" class="tab-content">
       <div class="tab-pane fade in active" id="home">
       	<div id="contenidoQueJalada">
       		<input type="hidden" value="2" id="hiddenQueJalada">
       		
       		<%
-      		 Map<String,Imagen> m = ( Map<String,Imagen>)request.getAttribute("mapImagenes");
-				
-	      		Set set = m.entrySet();
-				Iterator i = set.iterator();
-				while(i.hasNext()) {
-				Map.Entry me = (Map.Entry)i.next();
-				Imagen obj=(Imagen)me.getValue();
-				String k=me.getKey().toString();
-				String titulo=obj.getTitle();
+      		 String resultado = request.getAttribute("mapImagenes").toString();
+			
 				
 			    		%>
-              			<div class="row">
-					
-					
+              			
 						
-						
-						
-							<div class="portfolio-item">
-		                		<div><h3><%=titulo %></h3></div>
-		                		<img class="img-responsive img-thumbnail" style="width:auto; height:auto;" src="<%=k %>" />
-		                	</div>
-		        		    <div style="text-align: center;">
-		        		    	
-		        		   		<div class="fb-like" data-href="http://xdiversion.com/laImagen?laURL=<%=k %>" data-layout="box_count" data-action="like" data-show-faces="true" data-share="true"></div>
-		        		    </div>
-						
-						</div>
-						
-					<% }
-					%>
+					<%=resultado%>
       		
       		
       		

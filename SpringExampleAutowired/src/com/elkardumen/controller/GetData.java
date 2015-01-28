@@ -1,14 +1,18 @@
 package com.elkardumen.controller;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.elkardumen.bean.Customer;
+import com.elkardumen.bean.Imagen;
 import com.elkardumen.dao.ImagenesDAO;
 import com.elkardumen.servlet.HiloGetImages;
 
@@ -38,10 +42,29 @@ public class GetData {
 		 
 		 
 		//return lst;
-		 model.addAttribute("mapImagenes", HiloGetImages.getM());
-			return "lavista";
+		 model.addAttribute("mapImagenes", HiloGetImages.getRetorno());
+		
+		 
+		 
+		 return "lavista";
  
 	}
+	 
+	 @RequestMapping(value="/getData", method = RequestMethod.GET)
+	 public @ResponseBody List getJSON(HttpServletRequest request) {
+		
+		 System.out.println("------------>ntrando");
+		int siguientes = Integer.valueOf(request.getParameter("siguientes"));
+		//List<Imagen> lst=cajeroDAO.getDatosCajero(cajero);
+    	
+		 List<Imagen> lst=new ArrayList<Imagen>();
+		 lst=HiloGetImages.getNextImages(siguientes);
+		 
+		return lst;
+ 
+	}
+	 
+	 
 //	 
 //	 @RequestMapping(value="/saveDataUsuarios", method = RequestMethod.POST)
 //	 public @ResponseBody void guardaUsuarios(HttpServletRequest request) {
