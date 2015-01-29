@@ -1,16 +1,17 @@
 package com.elkardumen.bean;
 
 public class Imagen {
-
+	int id;
 	String img;
 	String title;
 	long fecha;
 	
-	public long getFecha() {
-		return fecha;
+	
+	public int getId() {
+		return id;
 	}
-	public void setFecha(long fecha) {
-		this.fecha = fecha;
+	public void setId(int id) {
+		this.id = id;
 	}
 	public String getImg() {
 		return img;
@@ -24,5 +25,13 @@ public class Imagen {
 	public void setTitle(String title) {
 		this.title = title;
 	}
+	public long getFecha() {
+		return fecha;
+	}
+	public void setFecha(long fecha) {
+		this.fecha = fecha;
+	}
+	
+	
 	
 }

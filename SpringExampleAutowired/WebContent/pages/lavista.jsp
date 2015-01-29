@@ -39,20 +39,27 @@
 
 	
 	$(document).ready(function(){
-		  $("#btnAsiPasa").on("click",function(){
+		  $("#btnQueJalanda").on("click",function(){
 			  var l = Ladda.create(this);
 			 	l.start();
-			  var nPage=$("#hiddenAsiPasa").val();
-			  var newValue=Number(nPage)+11;
-			  $.get( "rest/getImagenAsiPasa/"+nPage, function( data ) {
-				  $("#hiddenAsiPasa").attr("value",newValue); 
+			  var nPage=$("#nElementosMostrados").val();
+			  var newValue=Number(nPage)+5;
+			  $.get( "getData?siguientes="+nPage, function( data ) {
+				  $("#nElementosMostrados").attr("value",newValue); 
 				  	
 				  $.each(data,function(index,valor){
-						$("#contenidoAsiPasa").append("<div class=\"row\">"+
-							  "	<div class=\"portfolio-item\">"+
-					          "      		<img class=\"img-responsive img-thumbnail\" style=\"width:auto; height:auto;\" src=\""+data[index].img+"\" />"+
-					          "		    </div>"+
-					          "</div>")
+					  
+					  
+					$("#contenidoQueJalada").append("  <div class=\"row\">"+
+					"	<div class=\"portfolio-item\">"+
+					"		<div><h3>"+data[index].title+"</h3></div>"+
+					"		<img class=\"img-responsive img-thumbnail\" style=\"width:auto; height:auto;\" src=\""+data[index].img+"\" />"+
+					"	</div>"+
+					"	<div style=\"text-align: center;\">"+
+					"		<div class=\"fb-like\" data-href=\"http://xdiversion.com/laImagen?laURL="+data[index].img+"\" data-layout=\"box_count\" data-action=\"like\" data-show-faces=\"true\" data-share=\"true\"></div>"+
+					"	</div>"+
+					"</div>");
+					  
 				  });
 				}).always(function() {
 					l.stop(); 
@@ -178,22 +185,12 @@
       	<div id="contenidoQueJalada">
       		<input type="hidden" value="2" id="hiddenQueJalada">
       		
-      		<%
-      		 String resultado = request.getAttribute("mapImagenes").toString();
-			
-				
-			    		%>
-              			
-						
-					<%=resultado%>
-      		
-      		
-      		
-        	</div>
-                
-                <div class="centrardiv">
-<!--                 	<button  id="btnQueJalanda" class="btn btn-primary ladda-button" data-style="expand-left"><span class="ladda-label" >Quiero ver mas.. Ahora!!!</span><span class="ladda-spinner"></span><div class="ladda-progress" style="width: 0px;"></div></button> -->
-                </div>
+      		<% String resultado = request.getAttribute("mapImagenes").toString(); %>
+             <%=resultado%>
+      	</div>
+        <div class="centrardiv">
+             <button  id="btnQueJalanda" class="btn btn-primary ladda-button" data-style="expand-left"><span class="ladda-label" >Quiero ver mas.. Ahora!!!</span><span class="ladda-spinner"></span><div class="ladda-progress" style="width: 0px;"></div></button>
+		</div>
                 
                 
 	  </div>

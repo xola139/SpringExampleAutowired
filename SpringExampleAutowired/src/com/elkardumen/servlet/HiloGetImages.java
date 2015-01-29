@@ -35,8 +35,15 @@ public class HiloGetImages  extends Thread{
 		
 		Document doc;
 		
+		//Cargamos las imagenes desde la base de datos
+		List<Imagen> lstStorageImage=imagenDAO.findAll();
 		
-		//imagenDAO.findAll();
+		for(Imagen ima: lstStorageImage){
+			m.put(ima.getImg(), ima);
+			lstImagen.add(ima);
+		}
+		
+		System.out.println("Numero de elementos desde base  "+ lstImagen.size());
 		
 		
 //		System.getProperties().put( "proxySet", "true" );
@@ -71,9 +78,7 @@ public class HiloGetImages  extends Thread{
 					if(!m.containsKey(img.getImg())){
 						m.put(img.getImg(), img);
 						lstImagen.add(img);
-						
-						//System.out.println("_________<"+imagenDAO.getMax());
-						//imagenDAO.insert(img);
+						imagenDAO.insert(img);
 					}
 						
 				}
@@ -96,7 +101,7 @@ public class HiloGetImages  extends Thread{
 					m.put(img.getImg(), img);
 					lstImagen.add(img);
 					//System.out.println("_________<"+imagenDAO.getMax());
-					//imagenDAO.insert(img);
+					imagenDAO.insert(img);
 				}
 				
 			}
@@ -111,20 +116,18 @@ public class HiloGetImages  extends Thread{
 					img.setImg(esgagURL);
 					img.setTitle(table.select("header").select("h2").select("a").text());
 					img.setFecha(System.currentTimeMillis());
-					//lstImg.add(img);
-					//m.put(img.getImg(), img);
+					
 					if(!m.containsKey(img.getImg())){
 						m.put(img.getImg(), img);
 						lstImagen.add(img);
-						//System.out.println("_________<"+imagenDAO.getMax());
-						//imagenDAO.insert(img);
+						imagenDAO.insert(img);
 					}
 				}
 				
 				
 			}
 
-			
+			System.out.println("Numero de elementos desde ciclo  "+ ciclos+"  " + lstImagen.size());
 
 			Thread.sleep(60000L);
 		} catch (Exception e) {
@@ -205,10 +208,8 @@ public class HiloGetImages  extends Thread{
 		
 		for(int i=lstImagen.size()-contador;i>0;i--){
 			nextImagen.add(lstImagen.get(i));
-			
 			count++;
 			if(count==6){
-				System.out.println(nextImagen.size()+"<-----------");
 				return nextImagen;
 			}
 		}

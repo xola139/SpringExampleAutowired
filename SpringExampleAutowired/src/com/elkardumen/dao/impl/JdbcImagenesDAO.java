@@ -60,18 +60,12 @@ public int getMax(){
 	}
 		
 	public List<Imagen> findAll(){
-			String sql = "SELECT * FROM NetworkImagenes";
-			List<Imagen> imagenes = new ArrayList<Imagen>();
-			List<Map<String, Object>> rows = getJdbcTemplate().queryForList(sql);
-
-			for (Map row : rows) {
-				Imagen imagen = new Imagen();
-				imagen.setImg(row.get("cust_id").toString());
-				imagen.setTitle(row.get("cust_id").toString());
-				imagen.setFecha(System.currentTimeMillis());
-				imagenes.add(imagen);
-
-			}
+			String sql = "SELECT img,title,fecha FROM NetworkImagenes order by fecha";
+			
+			List<Imagen> imagenes  = getJdbcTemplate().query(sql,
+					new BeanPropertyRowMapper<Imagen>(Imagen.class));
+			
+			
 
 			return imagenes;
 		}
@@ -128,7 +122,7 @@ public int getMax(){
 	public Customer findByCustomerId2(int custId){
 		 
 		String sql = "SELECT * FROM LOSUSUARIOS WHERE CUST_ID = ?";
-		Customer customer = (Customer)getJdbcTemplate().queryForObject(sql, new Object[] { custId },new BeanPropertyRowMapper(Customer.class));
+		Customer customer = getJdbcTemplate().queryForObject(sql, new Object[] { custId },new BeanPropertyRowMapper<Customer>(Customer.class));
 	
 		return customer;
 	}
@@ -137,14 +131,14 @@ public int getMax(){
 	public List<Customer> findAll2(){
 		
 		String sql = "SELECT * FROM LOSUSUARIOS";
-		List<Customer> customers  = getJdbcTemplate().query(sql,new BeanPropertyRowMapper(Customer.class));
+		List<Customer> customers  = getJdbcTemplate().query(sql,new BeanPropertyRowMapper<Customer>(Customer.class));
 		return customers;
 	}
 	
 	public String findCustomerNameById(int custId){
 		
 		String sql = "SELECT NAME FROM LOSUSUARIOS WHERE CUST_ID = ?";
-		String name = (String)getJdbcTemplate().queryForObject(sql, new Object[] { custId }, String.class);
+		String name = getJdbcTemplate().queryForObject(sql, new Object[] { custId }, String.class);
 	
 		return name;
 		
